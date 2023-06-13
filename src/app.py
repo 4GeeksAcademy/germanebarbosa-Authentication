@@ -38,7 +38,7 @@ CORS(app)
 # add the admin
 setup_admin(app)
 
-app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+app.config["JWT_SECRET_KEY"] = "claveapigermanesteban"  # Change this!
 jwt = JWTManager(app)
 
 # add the admin
