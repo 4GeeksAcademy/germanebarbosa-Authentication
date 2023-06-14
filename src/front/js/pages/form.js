@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
-export const Home = () => {
+export const RegisterForm = () => {
 	// const { store, actions } = useContext(Context);
 
 	return (
@@ -11,6 +11,7 @@ export const Home = () => {
 		<div className="main d-flex">
 			<div className="col-md-6 col-sm-12 m-auto">
 				<div className="login-form">
+                <h3 className="text-center mb-3"><strong>Register Form</strong></h3>
 				<form>
 					<div className="form-group">
 						<label>Email</label>
@@ -20,8 +21,8 @@ export const Home = () => {
 						<label>Password</label>
 						<input type="password" className="form-control" placeholder="Password"/>
 					</div>
-					<button type="submit" className="btn btn-black">Login</button>
-					<Link to="/form"><button type="submit" className="btn btn-secondary">Register</button></Link>
+					<button type="submit" className="btn btn-black">Register</button>
+					<Link className="float-end" to="/"><button type="submit" className="btn btn-danger">Cancel</button></Link>
 				</form>
 				</div>
 			</div>

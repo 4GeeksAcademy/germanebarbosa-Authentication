@@ -3,17 +3,11 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
 	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
-				</div>
+		<div className="sidenav d-flex">
+			<div className="login-main-text m-auto text-center">
+				<h2 className="display-3">Application<br/>Login Page</h2>
+				<h3>Login or register from here to access.</h3>
 			</div>
-		</nav>
+		</div>
 	);
 };

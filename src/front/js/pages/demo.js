@@ -16,7 +16,7 @@ export const Demo = () => {
 							className="list-group-item d-flex justify-content-between"
 							style={{ background: item.background }}>
 							<Link to={"/single/" + index}>
-								<span>Link to: {item.title}</span>
+								<span>Puta VIde to: {item.title}</span>
 							</Link>
 							{// Conditional render example
 							// Check to see if the background is orange, if so, display the message
