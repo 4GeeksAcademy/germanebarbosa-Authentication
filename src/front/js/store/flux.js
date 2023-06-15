@@ -13,12 +13,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			auth: false
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			login: (email,password) => {
+				const requestOptions = {
+					method: 'POST',
+					headers: { 'Content-Type':'application/json'},
+					body: JSON.stringify(
+						{
+							"email": email,
+							"password": password
+						}
+					)
+				};
+				fetch("https://germanebarbosa-studious-space-funicular-j64wgj5jpw7cp5p6-3001.preview.app.github.dev/api/login", requestOptions)
+					.then(response => {
+						console.log(response.status); //imprimo la validacion del codigo, 200 es correcto 401 significa error.
+						if( response.status === 200 ){
+							setStore({auth: true}) // Modifico el valor de la variable auth.
+						}
+						return response.json();
+					})
+					.then(data => {
+						localStorage.setItem("token", data.access_token)
+						console.log(data)
+					});
+			},
+
+			logout:()=>{
+				setStore({auth: false}) 
+				localStorage.remove("token")
+				console.log("funciona");
 			},
 
 			getMessage: async () => {
@@ -32,20 +59,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}catch(error){
 					console.log("Error loading message from backend", error)
 				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
 			}
 		}
 	};

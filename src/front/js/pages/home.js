@@ -1,24 +1,36 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useSearchParams, useNavigate, Navigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
 export const Home = () => {
 	// const { store, actions } = useContext(Context);
+	const [email,setEmail] = useState('')
+	const [password,setPassword] = useState('')
+	const {actions, store} = useContext(Context)
+	
+	function sendData(e){
+		e.preventDefault()
+		console.log(email, password);
+		actions.login(email, password);
+	}
+
 
 	return (
 		<>
-		<div className="main d-flex">
+		<div className="main d-flex h-100">
 			<div className="col-md-6 col-sm-12 m-auto">
 				<div className="login-form">
-				<form>
+                <h3 className="text-center mb-3"><strong>Login Page</strong></h3>
+				<form onSubmit={sendData}>
+				{store.auth === true ? <Navigate to='/private'/> : null}
 					<div className="form-group">
-						<label>Email</label>
-						<input type="text" className="form-control" placeholder="Email"/>
+						<label className="form-label">Email</label>
+						<input value={email} onChange={(e)=>setEmail(e.target.value)} type="email" className="form-control" placeholder="Email"/>
 					</div>
 					<div className="form-group">
-						<label>Password</label>
-						<input type="password" className="form-control" placeholder="Password"/>
+						<label className="form-label">Password</label>
+						<input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" className="form-control" placeholder="Password"/>
 					</div>
 					<button type="submit" className="btn btn-black">Login</button>
 					<Link to="/form"><button type="submit" className="btn btn-secondary">Register</button></Link>

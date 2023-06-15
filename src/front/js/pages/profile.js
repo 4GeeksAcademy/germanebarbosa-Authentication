@@ -1,10 +1,16 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
 export const Profile = () => {
-	// const { store, actions } = useContext(Context);
+	const { store, actions } = useContext(Context);
+	const navigate = useNavigate()
+
+	function handleLogOut(){
+		actions.logout()
+		navigate('/')
+	}
 
 	return (
 		<>
@@ -22,7 +28,11 @@ export const Profile = () => {
 						<input type="password" className="form-control" placeholder="Password"/>
 					</div>
 					<button type="submit" className="btn btn-black">Edit</button>
-					<Link className="float-end" to="/"><button type="submit" className="btn btn-danger">Logout</button></Link>
+					<button 
+					className="btn btn-danger float-end" 
+					onClick={()=>handleLogOut}>
+						Logout
+					</button>
 				</form>
 				</div>
 			</div>

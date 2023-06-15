@@ -1,10 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
 export const RegisterForm = () => {
 	// const { store, actions } = useContext(Context);
+	// const [email,setEmail] = useState('')
+	// const [password,setPassword] = useState('')
+	// const {actions, store} = useContext(Context)
+	
+	// function sendData(e){
+	// 	e.preventDefault()
+	// 	console.log("send data")
+	// 	console.log(email, password);
+	// 	actions.login(email, password);
+	// }
 
 	return (
 		<>
@@ -14,11 +24,11 @@ export const RegisterForm = () => {
                 <h3 className="text-center mb-3"><strong>Register Form</strong></h3>
 				<form>
 					<div className="form-group">
-						<label>Email</label>
+						<label className="form-label">Email</label>
 						<input type="text" className="form-control" placeholder="Email"/>
 					</div>
 					<div className="form-group">
-						<label>Password</label>
+						<label className="form-label">Password</label>
 						<input type="password" className="form-control" placeholder="Password"/>
 					</div>
 					<button type="submit" className="btn btn-black">Register</button>

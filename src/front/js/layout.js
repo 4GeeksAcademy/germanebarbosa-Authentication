@@ -31,10 +31,8 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<RegisterForm />} path="/form" />
                         <Route element={<Profile/>} path="/private" />
-                        {/* <Route element={<Single />} path="/single/:theid" /> */}
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
-                    {/* <Footer /> */}
                 </ScrollToTop>
             </BrowserRouter>
         </div>

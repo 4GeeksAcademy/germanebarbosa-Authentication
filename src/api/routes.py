@@ -13,14 +13,21 @@ api = Blueprint('api', __name__)
 @api.route('/signup' , methods=['POST'])
 def sign_up():
     body = request.get_json()
-    new_user = User(email = body["email"], password = body["password"], is_active = True)
-    db.session.add(new_user)
-    db.session.commit()
+    user = User.query.filter_by(email=body["email"]).first()
 
+    if user == None:
+        new_user = User(email = body["email"], password = body["password"], is_active = True)
+        db.session.add(new_user)
+        db.session.commit()
+
+        response_body = {
+            "message": "Se creo un nuevo usuario con existo."
+        }
+        return jsonify(response_body), 200
+    
     response_body = {
-        "message": "Se creo usuario Form"
-    }
-
+            "message": "Ya existe el usuario que intenta crear"
+        }
     return jsonify(response_body), 200
 
 
@@ -36,10 +43,9 @@ def get_users():
 def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    print(email)
     user = User.query.filter_by(email=email).first() #Valida que existe un usuario en la base de datos que estoy manejando
-    print(user)
-    if email != user.email or password != user.password:
+    
+    if email != user.email or password != user.password or user == None:
         return jsonify({"msg": "Incorrect username or password"}), 401    
     
     access_token = create_access_token(identity=email)
