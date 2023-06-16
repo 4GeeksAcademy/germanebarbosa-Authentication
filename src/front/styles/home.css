@@ -82,3 +82,8 @@ body {
 .form-group{
     margin: 5px 0;
 }
+
+.conteiner{
+    display: flex;
+    flex-direction: column;
+}

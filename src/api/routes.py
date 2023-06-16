@@ -45,10 +45,14 @@ def login():
     password = request.json.get("password", None)
     user = User.query.filter_by(email=email).first() #Valida que existe un usuario en la base de datos que estoy manejando
     
-    if email != user.email or password != user.password or user == None:
-        return jsonify({"msg": "Incorrect username or password"}), 401    
+    if user == None:
+        return jsonify({"msg": "Incorrect username or password"}), 401
+    
+    if email != user.email or password != user.password:
+        return jsonify({"msg": "Incorrect username or password"}), 401
     
     access_token = create_access_token(identity=email)
+    print(access_token)
     return jsonify(access_token=access_token)
 
 # Protect a route with jwt_required, which will kick out requests

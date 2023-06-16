@@ -14,7 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			auth: false
+			auth: false,
+			user_info:[]
 		},
 		actions: {
 			login: (email,password) => {
@@ -32,9 +33,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => {
 						console.log(response.status); //imprimo la validacion del codigo, 200 es correcto 401 significa error.
 						if( response.status === 200 ){
-							setStore({auth: true}) // Modifico el valor de la variable auth.
-						}
-						return response.json();
+								setStore({auth: true}) // Modifico el valor de la variable auth.
+							}else return alert("Usuario o clave incorrecto")
+						return response.json()
 					})
 					.then(data => {
 						localStorage.setItem("token", data.access_token)
@@ -42,10 +43,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
-			logout:()=>{
+			signup: (email,password) => {
+				const requestOptions = {
+					method: 'POST',
+					headers: { 'Content-Type':'application/json'},
+					body: JSON.stringify(
+						{
+							"email": email,
+							"password": password
+						}
+					)
+				};
+				fetch("https://germanebarbosa-studious-space-funicular-j64wgj5jpw7cp5p6-3001.preview.app.github.dev/api/signup", requestOptions)
+					.then(response =>response.json())
+					.then(data => console.log(data));
+			},
+			
+			get_user_information:() => {
+				const requestOptions = {
+					method: 'GET'};
+				  fetch("https://germanebarbosa-studious-space-funicular-j64wgj5jpw7cp5p6-3001.preview.app.github.dev/api/user", requestOptions)
+					.then(response => response.json())
+					.then(data => {
+						setStore({user_info: data})
+						console.log(data)
+					})
+					.catch(error => console.log('error', error));
+			},
+
+			logout:() => {
 				setStore({auth: false}) 
-				localStorage.remove("token")
-				console.log("funciona");
+				localStorage.removeItem("token")
 			},
 
 			getMessage: async () => {
