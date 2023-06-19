@@ -9,8 +9,7 @@ export const Home = () => {
 	const {actions, store} = useContext(Context)
 	
 	function sendData(e){
-		e.preventDefault()
-		console.log(email, password);
+		e.preventDefault();
 		actions.login(email, password);
 	}
 
