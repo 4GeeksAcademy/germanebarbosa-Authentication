@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import meme from "../../img/meme.jpeg"
@@ -12,14 +12,21 @@ export const Profile = () => {
 		actions.logout()
 		navigate("/")
 	}
-	
-	window.onload = () => actions.get_user_information()
+
+	useEffect(() => {
+	let token = localStorage.getItem("token")
+	console.log(token);
+	actions.validate_token(token)
+	}, []);
+
+	// window.onload = () => actions.validate_token(token)
 
 	return (
 		<>
+		{store.auth === true ?
 		<div className="main d-flex">
 			<div className="col-md-6 col-sm-12 m-auto">
-				<div className="login-form">
+				<div className="login-form" style={{marginTop:"40%"}}>
                 <h3 className="text-center mb-3"><strong>User Information</strong></h3>
 					<div className="form-group conteiner">
 						<img className="pb-3" src={meme} style={{height:400}}></img>
@@ -46,6 +53,7 @@ export const Profile = () => {
 				</div>
 			</div>
 		</div>
+		: <Navigate to='/'/>}
 		</>
 	);
 };

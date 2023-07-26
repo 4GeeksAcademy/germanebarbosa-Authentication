@@ -1,3 +1,5 @@
+import { Navigate, useNavigate } from "react-router-dom";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -74,6 +76,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logout:() => {
 				setStore({auth: false}) 
 				localStorage.removeItem("token")
+			},
+
+			validate_token:(token) => {
+				var myHeaders = new Headers();
+				myHeaders.append("Authorization", "Bearer "+token);
+
+				var requestOptions = {
+				method: 'GET',
+				headers: myHeaders,
+				redirect: 'follow'
+				};
+
+				fetch("https://germanebarbosa-studious-space-funicular-j64wgj5jpw7cp5p6-3001.preview.app.github.dev/api/private", requestOptions)
+				.then(response => {
+					console.log(response.status); //imprimo la validacion del codigo, 200 es correcto 401 significa error.
+					if( response.status === 200 ){
+							setStore({auth: true}) // Modifico el valor de la variable auth.
+						}else return alert("Token Invalido")
+					return response.json()
+				})
+				.then(result => console.log(result))
+				.catch(error => console.log('error', error));
 			},
 
 			getMessage: async () => {
